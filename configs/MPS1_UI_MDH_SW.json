@@ -1,0 +1,120 @@
+{
+    "sensors": [
+        {
+            "type": "MultiProbeSensor",
+            "phase_options": {
+                "sampling_rate": 1,
+                "duration": 10
+            },
+            "sensor_basic_options": {
+                "name": "MPS1"
+            },
+            "sensor_init_options": {
+                "push_button_pin": 20,
+                "push_button_mode": "SOFTWARE",
+                "probes": [
+                    {
+                        "probe_pin": 35,
+                        "control_enabled": false,
+                        "control_pin": 33,
+                        "enable_logic_level": 1,
+                        "post_on_interval": 100,
+                        "post_off_interval": 900
+                    }
+                ]
+            },
+            "senders": [
+                {
+                    "name": "HttpsSender1",
+                    "sender_options": {
+                        "route": "set-client-data",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                },
+                {
+                    "name": "SerialWriter1",
+                    "sender_options": {}
+                }
+            ]
+        },
+        {
+            "type": "MDHRegister",
+            "phase_options": {
+                "sampling_rate": 0.1,
+                "duration": 10
+            },
+            "sensor_basic_options": {
+                "name": "MDHR"
+            },
+            "sensor_init_options": {
+            },
+            "senders": [
+                {
+                    "name": "HttpsSender2",
+                    "sender_options": {
+                        "route": "set-client-metadata",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                }
+            ]
+        }
+    ],
+    "senders": [
+        {
+            "name": "HttpsSender1",
+            "type": "HttpsSender",
+            "sender_basic_options": {
+                "formatter": "toJson"
+            },
+            "sender_options": {
+                "base_url": "",
+                "port": "5000",
+                "basic_auth": true,
+                "basic_auth_username": "master",
+                "basic_auth_password": "dhb"
+            }
+        },
+        {
+            "name": "HttpsSender2",
+            "type": "HttpsSender",
+            "sender_basic_options": {
+                "formatter": "asRAW"
+            },
+            "sender_options": {
+                "base_url": "",
+                "port": "5000",
+                "basic_auth": true,
+                "basic_auth_username": "master",
+                "basic_auth_password": "dhb"
+            }
+        },
+        {
+            "name": "SerialWriter1",
+            "type": "SerialWriter",
+            "sender_basic_options": {
+                "formatter": "toCSV"
+            },
+            "sender_options": {}
+        }
+    ],
+    "mdh_discovery_client": {
+        "enabled": true,
+        "server_name": "mdh.opteev",
+        "client_name": "opteev",
+        "server_port": 9998,
+        "client_port": 9999,
+        "targets": [
+            {
+                "name": "HttpsSender1",
+                "config_item": "base_url"
+            },
+            {
+                "name": "HttpsSender2",
+                "config_item": "base_url"
+            }
+        ],
+        "default_server": "192.168.187.241"
+    }
+}

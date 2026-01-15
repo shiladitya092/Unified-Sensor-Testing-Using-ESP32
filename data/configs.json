@@ -1,0 +1,291 @@
+{
+    "sensors": [
+        {
+            "type": "DHTSensor",
+            "phase_options": {
+                "sampling_rate": 0.5,
+                "duration": 2
+            },
+            "sensor_basic_options": {
+                "name": "DHT Sensor 1"
+            },
+            "sensor_init_options": {
+                "dht_pin": 25
+            },
+            "senders": [
+                {
+                    "name": "HttpsSender1",
+                    "sender_options": {
+                        "route": "test1",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                },
+                {
+                    "name": "FileWriter1",
+                    "sender_options": {}
+                }
+            ]
+        },
+        {
+            "type": "DHTSensor",
+            "phase_options": {
+                "sampling_rate": 1,
+                "duration": 2
+            },
+            "sensor_basic_options": {
+                "name": "DHT Sensor 2"
+            },
+            "sensor_init_options": {
+                "dht_pin": 26
+            },
+            "senders": [
+                {
+                    "name": "HttpsSender1",
+                    "sender_options": {
+                        "route": "test1",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                },
+                {
+                    "name": "HttpSender2",
+                    "sender_options": {
+                        "route": "test2",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "LTSensor",
+            "phase_options": {
+                "sampling_rate": 0.25,
+                "duration": 2
+            },
+            "sensor_basic_options": {
+                "name": "LT Sensor 1"
+            },
+            "sensor_init_options": {
+                "pin_number": 27
+            },
+            "senders": [
+                {
+                    "name": "HttpsSender1",
+                    "sender_options": {
+                        "route": "test1",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                },
+                {
+                    "name": "HttpSender2",
+                    "sender_options": {
+                        "route": "test2",
+                        "method": "POST",
+                        "content_type": "application/json"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "MultiProbeSensor",
+            "phase_options": {
+                "sampling_rate": 1,
+                "duration": 2
+            },
+            "sensor_basic_options": {
+                "name": "Multi Probe Sensor 1"
+            },
+            "sensor_init_options": {
+                "push_button_pin": 27,
+                "push_button_mode": "SOFTWARE",
+                "probes": [
+                    {
+                        "probe_pin": 35,
+                        "control_enabled": true,
+                        "control_pin": 23,
+                        "enable_logic_level": 1,
+                        "post_on_interval": 0,
+                        "post_off_interval": 0
+                    },
+                    {
+                        "probe_pin": 35,
+                        "control_enabled": true,
+                        "control_pin": 23,
+                        "enable_logic_level": 1,
+                        "post_on_interval": 0,
+                        "post_off_interval": 0
+                    },
+                    {
+                        "probe_pin": 35,
+                        "control_enabled": true,
+                        "control_pin": 23,
+                        "enable_logic_level": 1,
+                        "post_on_interval": 0,
+                        "post_off_interval": 0
+                    },
+                    {
+                        "probe_pin": 35,
+                        "control_enabled": true,
+                        "control_pin": 23,
+                        "enable_logic_level": 1,
+                        "post_on_interval": 0,
+                        "post_off_interval": 0
+                    }
+                ]
+            },
+            "senders": [
+                {
+                    "name": "FileWriter1",
+                    "sender_options": {
+                        "end_line": true
+                    }
+                },
+                {
+                    "name": "SerialWriter1",
+                    "sender_options": {}
+                }
+            ]
+        },
+        {
+            "type": "ProbeSensor",
+            "phase_options": {
+                "sampling_rate": 1,
+                "duration": 2
+            },
+            "sensor_basic_options": {
+                "name": "Probe Sensor 1"
+            },
+            "sensor_init_options": {
+                "probe_pin": 35,
+                "control_enabled": true,
+                "control_pin": 23,
+                "enable_logic_level": 1,
+                "post_on_interval": 0,
+                "post_off_interval": 0
+            },
+            "senders": [
+                {
+                    "name": "FileWriter1",
+                    "sender_options": {
+                        "end_line": true
+                    }
+                },
+                {
+                    "name": "SerialWriter1",
+                    "sender_options": {}
+                }
+            ]
+        },
+        {
+            "type": "ADS7844",
+            "phase_options": {
+                "sampling_rate": 1,
+                "duration": 5
+            },
+            "sensor_basic_options": {
+                "name": "ADS7844 Sensor 1"
+            },
+            "sensor_init_options": {
+                "cs_pin": 5,
+                "iterations": 100
+            },
+            "senders": [
+                {
+                    "name": "FileWriter1",
+                    "sender_options": {
+                        "end_line": true
+                    }
+                },
+                {
+                    "name": "SerialWriter1",
+                    "sender_options": {}
+                }
+            ]
+        },
+        {
+            "type": "SPIFFSSensor",
+            "phase_options": {
+                "sampling_rate": 0.2,
+                "duration": 5
+            },
+            "sensor_basic_options": {
+                "name": "SPIFFS Sensor"
+            },
+            "sensor_init_options": {
+                "led_pin": 3,
+                "threshold": 0.6
+            },
+            "senders": []
+        }
+    ],
+    "senders": [
+        {
+            "name": "HttpsSender1",
+            "type": "HttpsSender",
+            "sender_basic_options": {
+                "formatter": "toJson"
+            },
+            "sender_options": {
+                "base_url": "192.168.99.181",
+                "port": "5000",
+                "basic_auth": true,
+                "basic_auth_username": "master",
+                "basic_auth_password": "dhb"
+            }
+        },
+        {
+            "name": "HttpSender2",
+            "type": "HttpSender",
+            "sender_basic_options": {
+                "formatter": "toCSV"
+            },
+            "sender_options": {
+                "base_url": "192.168.99.181",
+                "port": "5001",
+                "basic_auth": true,
+                "basic_auth_username": "master",
+                "basic_auth_password": "dhb"
+            }
+        },
+        {
+            "name": "FileWriter1",
+            "type": "SpiffsFileWriter",
+            "sender_basic_options": {
+                "formatter": "toCSV"
+            },
+            "sender_options": {
+                "filename": "test_file1.csv",
+                "binary": false,
+                "append": true,
+                "capacity_threshold": 0.6,
+                "usage_check_interval": 3000
+            }
+        },
+        {
+            "name": "SerialWriter1",
+            "type": "SerialWriter",
+            "sender_basic_options": {
+                "formatter": "toCSV"
+            },
+            "sender_options": {}
+        }
+    ],
+    "mdh_discovery_client": {
+        "mdh_server": "",
+        "enabled": true,
+        "server_name": "mdh.virawarn",
+        "client_name": "virawarn",
+        "server_port": 9998,
+        "client_port": 9999,
+        "targets": [
+            {
+                "name": "HttpsSender1",
+                "config_item": "base_url"
+            }
+        ],
+        "default_server": "192.168.187.241"
+    }
+}

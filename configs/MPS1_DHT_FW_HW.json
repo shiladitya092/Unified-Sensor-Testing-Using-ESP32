@@ -1,0 +1,94 @@
+{
+    "sensors": [
+        {
+            "type": "DHTSensor",
+            "phase_options": {
+                "sampling_rate": 0.1,
+                "duration": 10
+            },
+            "sensor_basic_options": {
+                "name": "DHT1"
+            },
+            "sensor_init_options": {
+                "dht_pin": 27
+            },
+            "senders": [
+            ]
+        },
+        {
+            "type": "MultiProbeSensor",
+            "phase_options": {
+                "sampling_rate": 0.1,
+                "duration": 10
+            },
+            "sensor_basic_options": {
+                "name": "MPS1"
+            },
+            "sensor_init_options": {
+                "push_button_pin": 20,
+                "push_button_mode": "HARDWARE",
+                "probes": [
+                    {
+                        "probe_pin": 35,
+                        "control_enabled": false,
+                        "control_pin": 33,
+                        "enable_logic_level": 1,
+                        "post_on_interval": 100,
+                        "post_off_interval": 900
+                    }
+                ]
+            },
+            "senders": [
+                {
+                    "name": "FileWriter1",
+                    "sender_options": {
+                        "end_line": true
+                    }
+                },
+                {
+                    "name": "SerialWriter1",
+                    "sender_options": {}
+                }
+            ]
+        }
+    ],
+    "senders": [
+        {
+            "name": "FileWriter1",
+            "type": "SpiffsFileWriter",
+            "sender_basic_options": {
+                "formatter": "toCSV"
+            },
+            "sender_options": {
+                "filename": "data.csv",
+                "newline_char": 10,
+                "binary": false,
+                "append": true,
+                "capacity_threshold": 0.6,
+                "usage_check_interval": 5000
+            }
+        },
+        {
+            "name": "SerialWriter1",
+            "type": "SerialWriter",
+            "sender_basic_options": {
+                "formatter": "toCSV"
+            },
+            "sender_options": {}
+        }
+    ],
+    "mdh_discovery_client": {
+        "enabled": false,
+        "server_name": "mdh.opteev",
+        "client_name": "opteev",
+        "server_port": 9998,
+        "client_port": 9999,
+        "targets": [
+            {
+                "name": "HttpsSender1",
+                "config_item": "base_url"
+            }
+        ],
+        "default_server": "192.168.187.241"
+    }
+}
